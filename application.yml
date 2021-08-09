@@ -1,0 +1,46 @@
+cloud:
+    gateway:
+      routes:
+        - id: MOVIE-CATALOG-SERVICE
+          uri: lb://MOVIE-CATALOG-SERVICE
+          predicates:
+            - Path=/catalog/**
+#          filters:
+#            - name: CircuitBreaker
+#              args:
+#                name: MOVIE-CATALOG-SERVICE 
+#                fallbackuri: forward:/movieCatalogFallbackMethod
+        - id: MOVIE-INFO-SERVICE
+          uri: lb://MOVIE-INFO-SERVICE
+          predicates:
+            - Path=/movie/**
+#          filters:
+#            - name: CircuitBreaker
+#              args:
+#                name: MOVIE-INFO-SERVICE
+#                fallbackuri: forward:/movieInfoFallbackMethod
+        - id: RATING-DATA-SERVICE
+          uri: lb://RATING-DATA-SERVICE
+          predicates:
+            - Path=/ratingsdata/**
+#          filters:
+#            - name: CircuitBreaker
+#              args:
+#                name: RATING-DATA-SERVICE
+#                fallbackuri: forward:/ratingsDataFallbackMethod
+
+
+hystrix:
+  command:
+    fallbackcmd:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 4000
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
