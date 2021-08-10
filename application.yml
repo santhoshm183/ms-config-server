@@ -1,4 +1,5 @@
-cloud:
+spring:
+  cloud:
     gateway:
       routes:
         - id: MOVIE-CATALOG-SERVICE
@@ -28,8 +29,6 @@ cloud:
 #              args:
 #                name: RATING-DATA-SERVICE
 #                fallbackuri: forward:/ratingsDataFallbackMethod
-
-
 hystrix:
   command:
     fallbackcmd:
